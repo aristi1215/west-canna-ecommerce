@@ -1,4 +1,4 @@
-import { View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import products from '@/assets/data/products';
 import {ProductItem} from '@/components/ProductItem'
 

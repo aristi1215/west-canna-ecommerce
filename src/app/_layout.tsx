@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { CartContextProvider } from '../context/CartProvider';
 import 'react-native-reanimated';
 import "../../global.css";
 
@@ -31,10 +32,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <CartContextProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="cart" options={{ headerShown: false , presentation: 'modal'}} />
         <Stack.Screen name="+not-found" />
       </Stack>
+      </CartContextProvider>
     </ThemeProvider>
   );
 }

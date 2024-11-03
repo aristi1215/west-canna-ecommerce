@@ -1,6 +1,5 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
@@ -23,6 +22,7 @@ export default function TabLayout() {
         options={{
           title: 'Menu',
           headerShown: false,
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'cafe' : 'cafe-outline'} color={color} />
           ),
@@ -32,6 +32,7 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'Order',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'list' : 'list-outline'} color={color} />
           ),

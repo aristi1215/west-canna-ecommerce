@@ -1,4 +1,4 @@
-import { View, Image, Text, Pressable } from 'react-native';
+import { Image, Text, Pressable } from 'react-native';
 import { Product } from "@/assets/types"
 import { Link } from 'expo-router';
 
@@ -8,6 +8,7 @@ export const defaultImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com
 type ProductItemProps = {
   product: Product
 }
+
 
 export const ProductItem = ( {product} : ProductItemProps ) => {
     return(

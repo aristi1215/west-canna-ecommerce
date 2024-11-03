@@ -5,7 +5,8 @@ const Product = () => {
   const {id} = useLocalSearchParams()
   return (
     <>
-    <Stack.Screen options={{title: 'Details'}} />
+    {/* Se esta llamando el stack screen aqui simplemente para cambiar el titulo */}
+    <Stack.Screen options={{title: 'Details', presentation:'modal'}} />
     <ProductDetails id={id} />
     </>
   )
