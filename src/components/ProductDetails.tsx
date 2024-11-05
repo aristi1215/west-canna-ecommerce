@@ -5,7 +5,7 @@ import { PizzaSize } from "@/assets/types"
 import { useCartContext } from "../context/CartProvider"
 
 
-export const ProductDetails = ({ id }) => {
+export const ProductDetails = ({ id, admin=false }) => {
 
     const sizes = ['S', 'M', 'L', 'XL'] as const
     type Size = typeof sizes[number]
@@ -27,6 +27,12 @@ export const ProductDetails = ({ id }) => {
     }
 
     return (
+        admin ? (<View className="flex-1 justify-center items-center bg-white">
+                    <Text className="text-3xl font-bold">{product?.name}</Text>
+                    <Image source={{uri: product?.image}} className="w-full aspect-square" />
+                    <Text className="mt-10 mb-5 text-start w-full ml-12 text-2xl font-bold  ">Price ${product.price}</Text>
+                </View>
+                ) : (
         <View className="flex-1 justify-center items-center bg-white">
             <Text className="text-3xl font-bold">{product?.name}</Text>
             <Image source={{uri: product?.image}} className="w-full aspect-square" />
@@ -44,6 +50,6 @@ export const ProductDetails = ({ id }) => {
             <TouchableOpacity onPress={handleAddToCart} className="bg-blue-400 w-[90%] rounded-full h-14 justify-center items-center ">
                 <Text className="text-white">Add to cart</Text>
             </TouchableOpacity>
-        </View>
+        </View>)
     )
 }
