@@ -1,73 +1,69 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { supabase } from "@/src/supabase/client";
+import { useAuthContext } from '../../context/AuthContext';
 
 const signIn = () => {
-
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   const inputStyle = "border border-gray-500 rounded-lg p-1 w-full my-2";
 
-  const validateFields = () => {
-    if (!name) {
-      setError("Name must be filled");
-      return false;
-    }
+  const handleSignIn = async () => {
 
-    if (!password) {
-      setError("Password must be filled");
-      return false;
-    }
+    setLoading(true)
 
-    setName("");
-    setError("");
-    setError("");
-    return true;
+    const { data , error } = await supabase.auth.signInWithPassword({ email, password })
+    const { profile } = useAuthContext()
+
+    if(error) { 
+      alert(error.message)
+      setLoading(false)
+      return
+    };
+    setLoading(false);
+
+
+    console.log(profile)
+    
   };
 
-
-  const handleSignIn = () => {
-    console.log('loguiado bro')
-  }
-
   return (
-      <View className="flex-1 bg-white justify-center items-center px-[10%]">
+    <View className="flex-1 bg-white justify-center items-center px-[10%]">
+      <Text className="text-start w-full">Email</Text>
 
-        <Text className="text-start w-full">Email</Text>
+      <TextInput
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email@gmail.com"
+        className={inputStyle}
+      />
 
-        <TextInput
-          value={name}
-          onChangeText={setName}
-          placeholder="Email@gmail.com"
-          className={inputStyle}
-        />
+      <Text className="text-start w-full">Password</Text>
+      <TextInput
+        value={password}
+        onChangeText={setPassword}
+        placeholder="*****"
+        className={inputStyle}
+        textContentType="password"
+      />
 
-        <Text className="text-start w-full">Password</Text>
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="*****"
-          className={inputStyle}
-          textContentType="password"
-        />
+      <Pressable
+        onPress={handleSignIn}
+        className="bg-[#087c6c] rounded-full w-full h-[3rem] justify-center my-10"
+        disabled={loading}
+      >
+        <Text className="text-white text-center">{loading ? 'SignIn In...' : 'Sign In' }</Text>
+      </Pressable>
 
-        <Pressable
-          onPress={handleSignIn}
-          className="bg-blue-500 rounded-full w-full h-[3rem] justify-center mt-10"
-        >
-          <Text className="text-white text-center">
-            Sign in
-          </Text>
-        </Pressable>
+      <Link href={"/(auth)/signUp"}>
+        <Text className="decoration-dashed text-[#087c6c] ">Don't have an account? Sign Up</Text>
+      </Link>
+    </View>
+  );
+};
 
-        <Link href={'/(auth)/signUp'}>
-            <Text className="decoration-dashed text-blue-600 mt-10">sign Up</Text>
-        </Link>
-      </View>
-     
-  )
-}
-
-export default signIn
+export default signIn;

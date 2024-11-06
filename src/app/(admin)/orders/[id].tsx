@@ -1,9 +1,10 @@
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, Pressable } from 'react-native';
 import React from 'react'
 import { defaultImage } from '@/src/components/ProductItem'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import orders from '@/assets/data/orders'
 import { OrderComponent } from '@/src/components/OrderComponent';
+import { OrderStatus } from '@/src/components/OrderStatus';
 
 export default function OrderDetails() {
 
@@ -24,7 +25,9 @@ export default function OrderDetails() {
                   <Text className="text-gray-500">{item?.products.price} size: {item?.size}</Text>
               </View>
               <Text className="text-black font-bold">{order?.order_items?.length}</Text>
-          </View>)}
+          </View>)
+        }
+        ListFooterComponent={() => ( <OrderStatus orderStatus={order.status} />)}
       />
     </View>
   )

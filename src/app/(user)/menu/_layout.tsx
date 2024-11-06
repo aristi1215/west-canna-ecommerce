@@ -8,7 +8,7 @@ export default function MenuStack() {
                 <ModalExample />
             )
         }} >
-            <Stack.Screen name="index" options={{ title: 'Menu', headerTitleAlign: 'center' }} />
+            <Stack.Screen name="index" options={{ title: 'Shopping', headerTitleAlign: 'center', headerStyle: {backgroundColor: '#087c6c' } }} />
        
         </Stack>
     )

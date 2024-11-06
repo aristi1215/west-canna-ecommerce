@@ -1,11 +1,17 @@
-import { View, Text } from 'react-native'
-import { Stack } from 'expo-router'
-import React from 'react'
+import { Redirect, Stack } from 'expo-router'
+import { useAuthContext } from '@/src/context/AuthContext'
 
 const AuthLayout = () => {
+
+  const {profile, isAdmin} = useAuthContext()
+
+  console.log(profile, isAdmin)
+
+  if(profile && isAdmin) return <Redirect href={'/(admin)/menu'} />
+  if(profile && !isAdmin) return <Redirect href={'/(user)/menu'} />
+
   return (
     <Stack >
-        <Stack.Screen name='index' />
         <Stack.Screen name='signIn' options={{title: 'Sign In', headerTitleAlign: 'center'}} />
         <Stack.Screen name='signUp' options={{title: 'Sign Up', headerTitleAlign: 'center'}} />
     </Stack>

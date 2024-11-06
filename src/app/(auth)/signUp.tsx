@@ -1,35 +1,27 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { Link } from "expo-router";
+import { supabase } from "@/src/supabase/client";
+import { Alert } from "react-native";
 
 const signIn = () => {
 
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const inputStyle = "border border-gray-500 rounded-lg p-1 w-full my-2";
 
-  const validateFields = () => {
-    if (!name) {
-      setError("Name must be filled");
-      return false;
+
+  const signUpWithEmail = async () => {
+    setLoading(true)
+    const {error} = await supabase.auth.signUp({email,password})
+    if(error){
+      alert(error.message)
+      setLoading(true)
+      return
     }
-
-    if (!password) {
-      setError("Password must be filled");
-      return false;
-    }
-
-    setName("");
-    setError("");
-    setError("");
-    return true;
-  };
-
-
-  const handleSignUp = () => {
-    console.log('Registrandongo mongo bro')
+    setLoading(false)
   }
 
   return (
@@ -38,8 +30,8 @@ const signIn = () => {
         <Text className="text-start w-full">Email</Text>
 
         <TextInput
-          value={name}
-          onChangeText={setName}
+          value={email}
+          onChangeText={setEmail}
           placeholder="Email@gmail.com"
           className={inputStyle}
         />
@@ -54,16 +46,17 @@ const signIn = () => {
         />
 
         <Pressable
-          onPress={handleSignUp}
-          className="bg-blue-500 rounded-full w-full h-[3rem] justify-center mt-10"
+          onPress={signUpWithEmail}
+          className="bg-[#087c6c] rounded-full w-full h-[3rem] justify-center my-10"
+          disabled={loading}
         >
           <Text className="text-white text-center">
-            Sign Up
+           {loading ? 'SignIn Up...' : 'Sign Up'}
           </Text>
         </Pressable>
 
         <Link href={'/(auth)/signIn'}>
-            <Text className="decoration-dashed text-blue-600 mt-10">sign In</Text>
+            <Text className="decoration-dashed text-[#087c6c] mt-10">Already have an account? Sign In</Text>
         </Link>
       </View>
      

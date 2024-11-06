@@ -3,6 +3,7 @@ import products from "@/assets/data/products"
 import { useState } from "react"
 import { PizzaSize } from "@/assets/types"
 import { useCartContext } from "../context/CartProvider"
+import { Alert } from "react-native"
 
 
 export const ProductDetails = ({ id, admin=false }) => {
@@ -23,19 +24,20 @@ export const ProductDetails = ({ id, admin=false }) => {
     
     const handleAddToCart = () => {
         addItem(product, selectedSize)
-        alert('Item added')
+        Alert.alert('Item added to cart')
     }
 
     return (
         admin ? (<View className="flex-1 justify-center items-center bg-white">
                     <Text className="text-3xl font-bold">{product?.name}</Text>
-                    <Image source={{uri: product?.image}} className="w-full aspect-square" />
+                    <Image source={product.image ? product.image : require('../../assets/images/products/default.jpg')} className="w-full aspect-square max-h-[50%]" />
                     <Text className="mt-10 mb-5 text-start w-full ml-12 text-2xl font-bold  ">Price ${product.price}</Text>
                 </View>
                 ) : (
         <View className="flex-1 justify-center items-center bg-white">
             <Text className="text-3xl font-bold">{product?.name}</Text>
-            <Image source={{uri: product?.image}} className="w-full aspect-square" />
+            <Image source={product.image ? product.image : require('../../assets/images/products/default.jpg')} className="w-full aspect-square max-h-[50%]" />
+            <Text className="my-2">{product.description}</Text>
             <Text className="text-start w-full ml-3 mb-5 text-2xl">Select size</Text>
             <View className="flex-row justify-evenly w-full">
                 {sizes.map((size, i) => (
@@ -46,7 +48,7 @@ export const ProductDetails = ({ id, admin=false }) => {
                     </Pressable>
                     ))}
             </View>
-            <Text className="mt-10 mb-5 text-start w-full ml-12 text-2xl font-bold  ">Price ${product.price}</Text>
+            <Text className="mt-7 mb-5 text-start w-full ml-12 text-2xl font-bold  ">Price ${product.price}</Text>
             <TouchableOpacity onPress={handleAddToCart} className="bg-blue-400 w-[90%] rounded-full h-14 justify-center items-center ">
                 <Text className="text-white">Add to cart</Text>
             </TouchableOpacity>

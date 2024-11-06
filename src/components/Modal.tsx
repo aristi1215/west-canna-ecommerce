@@ -5,7 +5,7 @@ import {
   Pressable,
   StyleSheet,
   FlatList,
-  Button,
+  Text,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useCartContext } from "../context/CartProvider";
@@ -30,7 +30,9 @@ export const ModalExample = () => {
             data={items}
             renderItem={({ item }) => <CartItemComponent item={item} />}
           />
-          <Button title={`total: ${total}`} />
+          <Pressable className="mb-3 w-[80%] rounded-full bg-[#087c6c] h-[4rem] items-center justify-center mx-auto">
+            <Text className="text-white">total: {`${total}`}</Text>
+          </Pressable>
         </View>
       </Modal>
       <Pressable

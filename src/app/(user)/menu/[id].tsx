@@ -6,7 +6,7 @@ const Product = () => {
   return (
     <>
     {/* Se esta llamando el stack screen aqui simplemente para cambiar el titulo */}
-    <Stack.Screen options={{title: 'Details', presentation:'modal'}} />
+    <Stack.Screen options={{title: 'Details', presentation:'modal', headerStyle: {backgroundColor: '#087c6c' } }} />
     <ProductDetails id={id} />
     </>
   )

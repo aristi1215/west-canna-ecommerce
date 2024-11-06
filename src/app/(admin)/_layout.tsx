@@ -1,11 +1,19 @@
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
+import { useAuthContext } from '@/src/context/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const { isAdmin, session } = useAuthContext()
+
+
+  
+  if(session && !isAdmin) return <Redirect href={'/(user)/'} />
+  if(!isAdmin) return <Redirect href={'/(auth)/'} />
 
   return (
     <Tabs

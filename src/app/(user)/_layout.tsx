@@ -3,6 +3,7 @@ import React from 'react';
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
+import { WeedLeaf } from '@/assets/icons/icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -23,9 +24,10 @@ export default function TabLayout() {
           title: 'Menu',
           headerShown: false,
           headerTitleAlign: 'center',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cafe' : 'cafe-outline'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <WeedLeaf  color={color} />
           ),
+          tabBarStyle: {backgroundColor: '#087c6c' },
         }}
       />
       <Tabs.Screen
@@ -35,8 +37,9 @@ export default function TabLayout() {
           title: 'Orders',
           headerTitleAlign: 'center',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'list' : 'list-outline'} color={color} />
+            <TabBarIcon name='list-outline' color={focused ? 'white' : 'rgb(234, 236, 238 )'} />
           ),
+          tabBarStyle: {backgroundColor: '#087c6c' },
         }}
       />
     </Tabs>
