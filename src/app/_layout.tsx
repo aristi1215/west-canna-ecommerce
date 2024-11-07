@@ -12,10 +12,8 @@ import "react-native-reanimated";
 import "../../global.css";
 import { AuthContextProvider } from "../context/AuthContext";
 import { Image } from "react-native";
-
-// Import your global CSS file
-
 import { useColorScheme } from "@/src/hooks/useColorScheme";
+import QueryProvider from "../providers/QueryProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -39,6 +37,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <AuthContextProvider>
+      <QueryProvider>
       <CartContextProvider>
         <Stack>
           <Stack.Screen name="(admin)" options={{ headerShown: false }} />
@@ -52,6 +51,7 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{title: 'West canna BC', headerLeft: () =>  <Image source={require('@assets/images/west-canna-logo.png')} className="w-10 h-10 rounded-full mr-3" /> }} />
         </Stack>
       </CartContextProvider>
+      </QueryProvider>
       </AuthContextProvider>
     </ThemeProvider>
   );

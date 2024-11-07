@@ -1,5 +1,6 @@
 import { Stack, useLocalSearchParams } from "expo-router"
 import { ProductDetails } from "@/components/ProductDetails"
+import { useProductById } from "@/src/api/products"
 
 const Product = () => {
   const {id} = useLocalSearchParams()

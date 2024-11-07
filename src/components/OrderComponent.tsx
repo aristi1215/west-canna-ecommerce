@@ -13,6 +13,7 @@ export const OrderComponent = ({order}) => {
     const segments = useSegments()
 
     if(!order) return <Text className="text-black text-center">Order not found</Text>
+    
     return (
     <Link href={`${segments[0]}/orders/${order.id}`} asChild>
         <Pressable>

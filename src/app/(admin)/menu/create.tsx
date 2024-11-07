@@ -3,6 +3,7 @@ import { useState } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { useCreateProduct } from "@/src/api/products";
 
 function CreateScreen() {
   const inputStyle = "border border-gray-500 rounded-lg p-1 w-full my-2";
@@ -10,8 +11,10 @@ function CreateScreen() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
-  const [image, setImage] = useState<string>(defaultImage);
+  const [image, setImage] = useState<string>(null);
   const { id } = useLocalSearchParams();
+
+  const { mutate: insertProduct } = useCreateProduct()
 
   const isUpdating = !!id;
 
@@ -40,7 +43,9 @@ function CreateScreen() {
 
   const handleCreateProduct = () => {
     if (!validateFields()) return;
-    console.log("creating product");
+    const data = insertProduct({name, price: parseFloat(price), image})
+    console.log(data)
+
   };
 
   const handleUpdateProduct = () => {
@@ -88,7 +93,8 @@ function CreateScreen() {
         }}
       />
 
-      <Image source={{ uri: image }} className="w-1/2 aspect-square" />
+
+      <Image source={ image ? { uri: image } : require('../../../../assets/images/products/default.jpg') } className=" h-[20rem] aspect-square mt-10" />
       <Text onPress={pickImage} className="font-bold text-xl mb-10">
         Select image
       </Text>

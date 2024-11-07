@@ -1,11 +1,11 @@
-import { View, Pressable, Text, Image, ImageBackground} from 'react-native';
-import React from 'react';
+import { Pressable, Text, Image, ImageBackground} from 'react-native';
 import { Link } from 'expo-router';
 import { supabase } from '../supabase/client';
 import { useAuthContext } from '../context/AuthContext';
 import { ActivityIndicator } from 'react-native';
-const index = () => {
 
+const index = () => {
+ 
   const { loading } = useAuthContext()
 
   if(loading){
