@@ -1,9 +1,12 @@
-import { defaultImage } from "@/src/components/ProductItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useCreateProduct } from "@/src/api/products";
+import { router, Stack, useLocalSearchParams } from "expo-router";
+import { useCreateProduct, useDeleteProduct, useProductById, useUpdateProduct } from "@/src/api/products";
+import * as FileSystem from 'expo-file-system'
+import { randomUUID } from "expo-crypto";
+import { supabase } from "@/src/client/client";
+import {decode} from 'base64-arraybuffer'
 
 function CreateScreen() {
   const inputStyle = "border border-gray-500 rounded-lg p-1 w-full my-2";
@@ -11,12 +14,29 @@ function CreateScreen() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
-  const [image, setImage] = useState<string>(null);
+  const [image, setImage] = useState(null);
   const { id } = useLocalSearchParams();
 
-  const { mutate: insertProduct } = useCreateProduct()
-
   const isUpdating = !!id;
+
+  const { mutate: insertProduct } = useCreateProduct()
+  const { mutate: updateProduct } = useUpdateProduct()
+  const { mutate: deleteProduct } = useDeleteProduct()
+  
+  const {data: currentProduct} = useProductById(id)
+
+  
+
+    useEffect(() => {
+      if(isUpdating && currentProduct){
+
+          setName(currentProduct.name)
+          setPrice(currentProduct.price.toString())
+          setImage(currentProduct.image)
+      }
+    },[currentProduct])
+
+
 
   const validateFields = () => {
     if (!name) {
@@ -36,21 +56,35 @@ function CreateScreen() {
 
     setName("");
     setPrice("");
-    setImage(defaultImage);
+    setImage(null);
     setError("");
     return true;
   };
 
-  const handleCreateProduct = () => {
-    if (!validateFields()) return;
-    const data = insertProduct({name, price: parseFloat(price), image})
-    console.log(data)
+  const handleCreateProduct = async () => {
 
+    if (!validateFields()) return;
+
+    const bucketImage = await uploadImage()
+
+    insertProduct({name, price: parseFloat(price), image: bucketImage},
+    {
+      onSuccess: async () => {
+        router.back()
+
+      }
+    })
   };
 
-  const handleUpdateProduct = () => {
+  const handleUpdateProduct = async () => {
     if (!validateFields()) return;
-    console.log("update product");
+    const newImage = await uploadImage()
+    console.log(newImage)
+    updateProduct({name, price: parseFloat(price) , image: newImage, id}, {
+      onSuccess: () => {
+        router.back()
+      }
+    })
   };
 
   const confirmDelete = () => {
@@ -67,8 +101,38 @@ function CreateScreen() {
   };
 
   const handleDelete = () => {
-    console.log("Deleteado, gg chavales");
+    deleteProduct(id, {
+      onSuccess: () => {
+        router.replace('/(admin)/menu')
+      }
+    })
   };
+
+
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')){
+      return
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64'
+    });
+
+    const filePath = `${randomUUID()}.png`
+    const contentType = 'image/png'
+
+    const {data, error} = await supabase.storage
+    .from('product-images')
+    .upload(filePath, decode(base64), {contentType})
+
+    if(error){alert('An error has occurred uploading the file')}
+
+
+    if(data) {
+      return data.path
+    }
+
+  }
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

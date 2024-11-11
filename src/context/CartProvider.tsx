@@ -1,12 +1,18 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
-import { CartItem, Product } from "../../assets/types";
+import { CartItem, Product } from '../../assets/types';
 import { randomUUID } from "expo-crypto";
+import { useInsertOrders } from "../api/orders";
+import { useRouter } from "expo-router";
+import { useInsertOrderItems } from '../api/order-items/index';
+import { initializePaymentSheet, openPaymentSheet } from '../lib/stripe';
+
 
 type CartType = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
   updateQuantity: (product: Product, amount: 1 | -1) => void;
   total: Number;
+  checkOut: () => void
 };
 
 const CartContext = createContext<CartType>({
@@ -14,15 +20,18 @@ const CartContext = createContext<CartType>({
   addItem: () => {},
   updateQuantity: () => {},
   total: 0,
+  checkOut: () => {}
 });
 
 export const useCartContext = () => useContext(CartContext);
 
 export const CartContextProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const { mutate: insertOrder } = useInsertOrders()
+  const {mutate: insertOrderItems} = useInsertOrderItems()
+  const router = useRouter()
 
   const addItem = (product: Product, size: CartItem["size"]) => {
-    console.log(product)
     const existingItem = items.find(
       (item) => item.product === product && item.size === size
     );
@@ -70,8 +79,43 @@ export const CartContextProvider = ({ children }: PropsWithChildren) => {
       .toFixed(2)
   );
 
+  const checkOut = async () => {
+    await initializePaymentSheet(Math.floor(total * 100))
+
+    const payed = await openPaymentSheet()
+    if(!payed){
+      return
+    }
+
+    insertOrder({total}, {onSuccess: saveOrderItems})
+  }
+
+  const saveOrderItems = (data) => {
+
+    const cartItems = items.map(items => {
+      return {
+        order_id: data.id,
+        product_id: items.product_id,
+        quantity: items.quantity,
+        size: items.size
+      }
+    }
+    )
+
+    insertOrderItems(cartItems, {
+      async onSuccess () {
+        clearCart()
+        router.push(`/(user)/orders/${data?.id}`)
+      }
+    })
+  }
+
+  const clearCart = () => {
+    setItems([])
+  }
+
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, total }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total, checkOut }}>
       {children}
     </CartContext.Provider>
   );

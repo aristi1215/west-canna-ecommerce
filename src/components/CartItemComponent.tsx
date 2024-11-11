@@ -1,12 +1,11 @@
 import { View, Text, Image, Pressable } from "react-native"
 import { Plus,Minus } from "@/assets/icons/icons"
 import { useCartContext } from "../context/CartProvider"
+import RemoteImage from "./RemoteImage"
 
 
 export const CartItemComponent = ({item}) => {
   if(!item) return <Text className="text-center">Item not found</Text>
-
-  console.log(item)
 
   const { updateQuantity } = useCartContext()
 
@@ -19,7 +18,7 @@ export const CartItemComponent = ({item}) => {
 
   return (
     <View className="flex-row h-[6rem] shadow-sm rounded-lg justify-between  p-2 mx-4 bg-white">
-        <Image source={item.product.image ? item.product.image : require('../../assets/images/products/default.jpg')} className="max-w-[4rem] h-full aspect-square" resizeMode="contain" />
+        <RemoteImage path={item.product.image}  className="max-w-[4rem] h-full aspect-square" resizeMode="contain" />
         <View className="flex-1 items-center justify-between flex-row gap-4 h-full">
         <View className="items-start justify-center h-full ml-3">
           <Text className="text-xl">{item.product.name}</Text>

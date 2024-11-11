@@ -5,9 +5,9 @@ import {
     useEffect,
     useState,
   } from "react";
-  import { supabase } from "../supabase/client";
+  import { supabase } from "../client/client";
   import { Session } from "@supabase/supabase-js";
-  import { Redirect } from "expo-router";
+  import { Redirect, router } from "expo-router";
   import { ActivityIndicator } from "react-native";
   
   type AuthData = {
@@ -66,7 +66,8 @@ import {
           if (session) {
             fetchProfile(session.user.id); // Vuelve a llamar a fetchProfile en cambios de sesión
           } else {
-            setProfile(null); // Restablece el perfil si no hay sesión
+            setProfile(null);
+            router.replace('/')
           }
           setLoading(false);
         });

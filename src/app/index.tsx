@@ -1,6 +1,6 @@
 import { Pressable, Text, Image, ImageBackground} from 'react-native';
 import { Link } from 'expo-router';
-import { supabase } from '../supabase/client';
+import { supabase } from '../client/client';
 import { useAuthContext } from '../context/AuthContext';
 import { ActivityIndicator } from 'react-native';
 

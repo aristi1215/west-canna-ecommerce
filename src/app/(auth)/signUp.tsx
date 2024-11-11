@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { Link } from "expo-router";
-import { supabase } from "@/src/supabase/client";
+import { supabase } from "@/src/client/client";
 import { Alert } from "react-native";
 
 const signIn = () => {

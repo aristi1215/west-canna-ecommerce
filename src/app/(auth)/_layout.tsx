@@ -4,9 +4,7 @@ import { useAuthContext } from '@/src/context/AuthContext'
 const AuthLayout = () => {
 
   const {profile, isAdmin} = useAuthContext()
-
-  console.log(profile, isAdmin)
-
+  
   if(profile && isAdmin) return <Redirect href={'/(admin)/menu'} />
   if(profile && !isAdmin) return <Redirect href={'/(user)/menu'} />
 

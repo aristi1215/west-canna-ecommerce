@@ -11,3 +11,7 @@ export const PencilSquare = ({...props}) => <FontAwesome name="pencil-square-o" 
 
 export const WeedLeaf = ({...props}) => <FontAwesome5 name="canadian-maple-leaf" size={24} color={'black'} {...props}  />
 
+export const Profile = ({...props}) => <FontAwesome5 name="user" size={24} color={'black'} {...props}  />
+
+
+

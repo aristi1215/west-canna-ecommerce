@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import { Link, useRouter } from "expo-router";
-import { supabase } from "@/src/supabase/client";
+import { supabase } from "@/src/client/client";
 import { useAuthContext } from '../../context/AuthContext';
 
 const signIn = () => {
@@ -20,15 +20,13 @@ const signIn = () => {
     const { profile } = useAuthContext()
 
     if(error) { 
+      console.log('hola')
+      console.error(error)
       alert(error.message)
       setLoading(false)
       return
     };
     setLoading(false);
-
-
-    console.log(profile)
-    
   };
 
   return (

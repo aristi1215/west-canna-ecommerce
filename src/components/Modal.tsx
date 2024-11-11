@@ -13,7 +13,7 @@ import { CartItemComponent } from "./CartItemComponent";
 
 export const ModalExample = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { items, total } = useCartContext();
+  const { items, total, checkOut } = useCartContext();
   return (
     <>
       <Modal
@@ -30,7 +30,7 @@ export const ModalExample = () => {
             data={items}
             renderItem={({ item }) => <CartItemComponent item={item} />}
           />
-          <Pressable className="mb-3 w-[80%] rounded-full bg-[#087c6c] h-[4rem] items-center justify-center mx-auto">
+          <Pressable className="mb-3 w-[80%] rounded-full bg-[#087c6c] h-[4rem] items-center justify-center mx-auto" onPress={checkOut}>
             <Text className="text-white">total: {`${total}`}</Text>
           </Pressable>
         </View>

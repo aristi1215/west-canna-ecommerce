@@ -4,6 +4,7 @@ import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import { WeedLeaf } from '@/assets/icons/icons';
+import { Profile } from '@/assets/icons/icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -38,6 +39,18 @@ export default function TabLayout() {
           headerTitleAlign: 'center',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name='list-outline' color={focused ? 'white' : 'rgb(234, 236, 238 )'} />
+          ),
+          tabBarStyle: {backgroundColor: '#087c6c' },
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          title: 'Orders',
+          headerTitleAlign: 'center',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name='person-circle-outline' color={focused ? 'white' : 'rgb(234, 236, 238 )'} />
           ),
           tabBarStyle: {backgroundColor: '#087c6c' },
         }}

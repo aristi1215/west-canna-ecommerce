@@ -14,6 +14,7 @@ import { AuthContextProvider } from "../context/AuthContext";
 import { Image } from "react-native";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import QueryProvider from "../providers/QueryProvider";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,23 +37,36 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <AuthContextProvider>
-      <QueryProvider>
-      <CartContextProvider>
-        <Stack>
-          <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(user)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="cart"
-            options={{ headerShown: false, presentation: "modal" }}
-          />
-          <Stack.Screen name="+not-found" />
-          <Stack.Screen name="index" options={{title: 'West canna BC', headerLeft: () =>  <Image source={require('@assets/images/west-canna-logo.png')} className="w-10 h-10 rounded-full mr-3" /> }} />
-        </Stack>
-      </CartContextProvider>
-      </QueryProvider>
-      </AuthContextProvider>
+      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_PUBLISHABLE_KEY || ''} >
+        <AuthContextProvider>
+          <QueryProvider>
+            <CartContextProvider>
+              <Stack>
+                <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen name="(user)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="cart"
+                  options={{ headerShown: false, presentation: "modal" }}
+                />
+                <Stack.Screen name="+not-found" />
+                <Stack.Screen
+                  name="index"
+                  options={{
+                    title: "West canna BC",
+                    headerLeft: () => (
+                      <Image
+                        source={require("@assets/images/west-canna-logo.png")}
+                        className="w-10 h-10 rounded-full mr-3"
+                      />
+                    ),
+                  }}
+                />
+              </Stack>
+            </CartContextProvider>
+          </QueryProvider>
+        </AuthContextProvider>
+      </StripeProvider>
     </ThemeProvider>
   );
 }
