@@ -4,6 +4,8 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
+//NO FUNCIONA EN IOS !!!!!!!!!
+
 const TopTabs = withLayoutContext(createMaterialTopTabNavigator().Navigator)
 
 export default function OrderListNavigator () {

@@ -15,6 +15,7 @@ import { Image } from "react-native";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import QueryProvider from "../providers/QueryProvider";
 import { StripeProvider } from "@stripe/stripe-react-native";
+import NotificationProvider from "../context/NotificationsContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,6 +41,7 @@ export default function RootLayout() {
       <StripeProvider publishableKey={process.env.EXPO_PUBLIC_PUBLISHABLE_KEY || ''} >
         <AuthContextProvider>
           <QueryProvider>
+          <NotificationProvider>
             <CartContextProvider>
               <Stack>
                 <Stack.Screen name="(admin)" options={{ headerShown: false }} />
@@ -64,6 +66,7 @@ export default function RootLayout() {
                 />
               </Stack>
             </CartContextProvider>
+          </NotificationProvider>
           </QueryProvider>
         </AuthContextProvider>
       </StripeProvider>

@@ -35,7 +35,7 @@ export default function OrderDetails() {
               <Text className="text-black font-bold">{order?.order_items?.length}</Text>
           </View>)
         }
-        ListFooterComponent={() => ( <OrderStatus orderStatus={order.status} id={id} />)}
+        ListFooterComponent={() => ( <OrderStatus orderStatus={order.status} id={id} order={order} />)}
       />
     </View>
   )
