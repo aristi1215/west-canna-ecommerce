@@ -45,10 +45,8 @@ export const initializePaymentSheet = async (amount:number) => {
       },
   })
 
-  console.log('holaaar')
 
   if (error) {
-    console.log('esto fallo men')
       console.error('Error initializing payment sheet:', error)
       throw new Error('Payment sheet initialization failed')
   }
@@ -59,6 +57,6 @@ export const initializePaymentSheet = async (amount:number) => {
 
 export const openPaymentSheet = async () => {
     const {error} = await presentPaymentSheet()
-    if(error) { console.log( error.message); alert(error.stripeErrorCode); return false}
+    if(error) { alert(error.message); return false}
     return true
 }
