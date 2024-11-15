@@ -35,6 +35,7 @@ export default function TabLayout() {
           title: 'Menu',
           headerShown: false,
           headerTitleAlign: 'center',
+          tabBarStyle: {backgroundColor: '#087c6c'},
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'cafe' : 'cafe-outline'} color={color} />
           ),
@@ -46,6 +47,7 @@ export default function TabLayout() {
           title: 'Order',
           headerTitleAlign: 'center',
           headerShown: false,
+          tabBarStyle: {backgroundColor: '#087c6c'},
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'list' : 'list-outline'} color={color} />
           ),

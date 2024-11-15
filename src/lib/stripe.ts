@@ -28,17 +28,25 @@ export const initializePaymentSheet = async (amount:number) => {
 
     const { paymentIntent, ephemeralKey, customer } = await fetchPaymentSheetParams(amount)
 
-    if(!paymentIntent) return
+    if(!paymentIntent || !ephemeralKey || !customer) {
+      throw new Error('Payment initialization failed')
+    }
 
-    await initPaymentSheet({
-        merchantDisplayName: "West Canna BC",
-        paymentIntentClientSecret: paymentIntent,
-        customerId: customer,
-        customerEphemeralKeySecret: ephemeralKey,
-        defaultBillingDetails: {
-            name: 'Jhon doe'
-        }
-    })
+
+    try{
+      await initPaymentSheet({
+          merchantDisplayName: "West Canna BC",
+          paymentIntentClientSecret: paymentIntent,
+          customerId: customer,
+          customerEphemeralKeySecret: ephemeralKey,
+          defaultBillingDetails: {
+              name: 'Jhon doe'
+          }
+      })
+    }catch(e){
+      console.error('Error initializing the payment sheet')
+    }
+
 }
 
 //Open the payment sheet 

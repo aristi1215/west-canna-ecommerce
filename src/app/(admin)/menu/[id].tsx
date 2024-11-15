@@ -7,7 +7,7 @@ const Product = () => {
   const {id} = useLocalSearchParams()
   return (
     <>
-    <Stack.Screen options={{title: 'Details', presentation:'modal', headerRight: () => (
+    <Stack.Screen options={{title: 'Details', presentation:'modal', headerStyle: {backgroundColor: '#087c6c'} , headerRight: () => (
       <Link href={`/(admin)/menu/create?id=${id}`} asChild >
           <Pressable>
               <PencilSquare/>

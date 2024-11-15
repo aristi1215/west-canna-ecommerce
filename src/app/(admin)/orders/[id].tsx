@@ -22,7 +22,7 @@ export default function OrderDetails() {
 
   return (
     <View className='flex-1 bg-gray-200 px-7'>
-      <Stack.Screen options={{title: `Order #${order.id.toString()}`, headerShown: true, headerTitleAlign: 'center'}} />
+      <Stack.Screen options={{title: `Order #${order.id.toString()}`, headerShown: true, headerTitleAlign: 'center', headerStyle: {backgroundColor: '#087c6c'}}} />
       <OrderComponent order={order} />
       <FlatList
         data={order.order_items}

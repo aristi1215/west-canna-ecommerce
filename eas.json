@@ -4,12 +4,23 @@
     "appVersionSource": "remote"
   },
   "build": {
+      
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL=https":"//ywhuimwzwqmhgnamhtfj.supabase.co",
+        "EXPO_PUBLIC_API_KEY":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3aHVpbXd6d3FtaGduYW1odGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA4NDc2MzIsImV4cCI6MjA0NjQyMzYzMn0.LJxAC1fnNhoeW9oUBEVkCbmo3uy0A7av4_vKkcqZXF8",
+        "EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY":"pk_test_51PJKRLFLljO5b0SC8UGcuMIMA4r7PJD8v2Mu1naWlaCTzK5qdrJpm6ulD0tM0pTDSuT6MLWsjkINSsf2Mu1idTAx00klhHwGoI"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL=https":"//ywhuimwzwqmhgnamhtfj.supabase.co",
+        "EXPO_PUBLIC_API_KEY":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3aHVpbXd6d3FtaGduYW1odGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA4NDc2MzIsImV4cCI6MjA0NjQyMzYzMn0.LJxAC1fnNhoeW9oUBEVkCbmo3uy0A7av4_vKkcqZXF8",
+        "EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY":"pk_test_51PJKRLFLljO5b0SC8UGcuMIMA4r7PJD8v2Mu1naWlaCTzK5qdrJpm6ulD0tM0pTDSuT6MLWsjkINSsf2Mu1idTAx00klhHwGoI"
+      }
     },
     "production": {
       "autoIncrement": true

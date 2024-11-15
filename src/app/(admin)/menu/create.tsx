@@ -154,6 +154,7 @@ function CreateScreen() {
           title: isUpdating ? "Update Products" : "Create Products",
           presentation: "modal",
           headerTitleAlign: "center",
+          headerStyle: {backgroundColor: '#087c6c'},
         }}
       />
 
@@ -167,7 +168,7 @@ function CreateScreen() {
       <TextInput
         value={name}
         onChangeText={setName}
-        placeholder="Pizza 6 chesses"
+        placeholder="West canna premium CBD"
         className={inputStyle}
       />
 
@@ -179,6 +180,7 @@ function CreateScreen() {
         className={inputStyle}
         keyboardType="numeric"
       />
+
 
       <Pressable
         onPress={isUpdating ? handleUpdateProduct : handleCreateProduct}
