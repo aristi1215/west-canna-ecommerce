@@ -38,7 +38,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_PUBLISHABLE_KEY || ''} >
+      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''} >
         <AuthContextProvider>
           <QueryProvider>
           <NotificationProvider>

@@ -80,15 +80,21 @@ export const CartContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const checkOut = async () => {
-    await initializePaymentSheet(Math.floor(total * 100))
+    try {
+        await initializePaymentSheet(Math.floor(total * 100))
 
-    const payed = await openPaymentSheet()
-    if(!payed){
-      return
+        const payed = await openPaymentSheet()
+        if (!payed) {
+            console.log('Payment was not completed')
+            return
+        }
+
+        insertOrder({ total }, { onSuccess: saveOrderItems })
+    } catch (error) {
+        console.error('Checkout error:', error.message)
+        alert('Failed to complete payment')
     }
-
-    insertOrder({total}, {onSuccess: saveOrderItems})
-  }
+}
 
   const saveOrderItems = (data) => {
 
